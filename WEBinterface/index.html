@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TEST INTERFACE</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="./index.css" />
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  </head>
+  <body class="body">
+    <img class="settingsbutton" onclick="settingsclick()" src="./capybara.png" />
+    <h id="lastupdate">Last Update</h>
+    <div id="map"></div>
+    <div class="timeframeselector">
+      <button onclick="setTimeFrameOffset(1)">1h</button>
+      <button onclick="setTimeFrameOffset(3)">3h</button>
+      <button onclick="setTimeFrameOffset(6)">6h</button>
+      <button onclick="setTimeFrameOffset(24)">24h</button>
+      <button onclick="setTimeFrameOffset(72)">72h</button>
+    </div>
+
+    <div id="settingswrapper">
+      <input type="text" id="settingstextinput" />
+      <button onclick="settingssubmited()">Save</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+.body {
+  width: 100vw;
+  box-sizing: border-box;
+  height: 90vh;
+  background-color: black;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#lastupdate {
+  width: 100%;
+  margin-top: 1rem;
+  text-align: center;
+  text-justify: auto;
+  color: aliceblue;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: large;
+}
+
+#map {
+  height: 100%;
+  width: 99vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  border-radius: 1rem;
+}
+
+.timeframeselector {
+  display: grid;
+
+  width: 95%;
+  margin: auto;
+  margin-bottom: 2rem;
+  height: 4rem;
+  padding: auto;
+
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.timeframeselector button {
+  width: 80%;
+  height: 100%;
+  border-radius: 1rem;
+  margin: auto;
+}
+
+.settingsbutton {
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+#settingswrapper {
+  background-color: rgba(240, 248, 255, 0.147);
+  position: absolute;
+  height: 4rem;
+  width: 100%;
+  bottom: 1rem;
+
+  display: none;
+  grid-template-columns: 4fr 1fr;
+}
+
+#settingswrapper input {
+  margin: 0.2rem;
+  border-radius: 0.5rem;
+}
+
+#settingswrapper button {
+  margin: 0.2rem;
+  border-radius: 0.5rem;
+}
