@@ -18,6 +18,7 @@ const bridge_realtime = "realtime";
 const bridge_ignitionlock = "ignitionlock";
 const bridge_batterylevel = "batterylevel";
 const bridge_lastupdate = "lastupdate";
+const bridge_gpsstatus = "gpsstatus";
 
 // other variables
 let timestartframe;
@@ -65,6 +66,27 @@ setInterval(() => {
   getBridgeDBValue(bridge_lastupdate).then(
     function (value) {
       lastupdatetime = String(value).slice(0, 14).replace(",", " - ");
+    },
+    function (error) {
+      console.log("ERROR GETTING BATTERY LEVEL");
+      console.error(error);
+    }
+  );
+
+  // get gps status
+  getBridgeDBValue(bridge_gpsstatus).then(
+    function (status) {
+      let statusdisplay = document.getElementById("gpsstatus");
+      if (status == "off") {
+        statusdisplay.innerText = "GPS OFF";
+        statusdisplay.style.color = "red";
+      } else if (status == "on") {
+        statusdisplay.innerText = "GPS ON";
+        statusdisplay.style.color = "green";
+      } else {
+        statusdisplay.innerText = "WTF???";
+        statusdisplay.style.color = "lightblue";
+      }
     },
     function (error) {
       console.log("ERROR GETTING BATTERY LEVEL");
