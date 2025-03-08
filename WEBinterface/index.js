@@ -144,7 +144,9 @@ setInterval(() => {
     }
   );
 
-  writelastupdate(lastupdatetime + " - " + (parseInt(lastbatterylevel) / 1000).toFixed(1) + "V");
+  let batterytext = isNaN(parseInt(lastbatterylevel)) ? "Charging" : String((parseInt(lastbatterylevel) / 1000).toFixed(1)) + "V";
+
+  writelastupdate(lastupdatetime + " - " + batterytext);
 }, 1000);
 
 //================ GET BRIDGE VALUES ====================================
