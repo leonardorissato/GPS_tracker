@@ -15,30 +15,16 @@ const char* apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
           
 
 
-int updateNormalDelay = 10000;
+int updateNormalDelay = 30000;
 int updateRealtimeDelay = 5000;
+int getGPSTimeout = 30000;
+String gpsstatus = "off";
 
 bool ignitionlock = false;
 bool realtime = false;
 
 
-float lat2      = 0;
-float lon2      = 0;
-float speed2    = 0;
-float alt2      = 0;
-int   vsat2     = 0;
-int   usat2     = 0;
-float accuracy2 = 0;
-int   year2     = 0;
-int   month2    = 0;
-int   day2      = 0;
-int   hour2     = 0;
-int   min2      = 0;
-int   sec2      = 0;
-uint8_t    fixMode   = 0;
-
-
-#define NETWORK_APN     "live.vodafone.com"//"sxzcat1"        //CHN-CT: China Telecom
+#define NETWORK_APN  "sxzcat1"        //CHN-CT: China Telecom
 
 
 TinyGsm modem(SerialAT);
@@ -80,14 +66,16 @@ void setup()
     }
 
     // warm up gps
-    getGPS();
+    bool warmedup = getGPS();
 
     // start and connect modem to internet
     startModem();
 
 
-    // send data as soon as it starts
-    sendDataToSupabase();
+    // send data as soon as it starts, only if we got gps at the start
+    if(warmedup){
+      sendDataToSupabase();
+    }
 
 }
 
@@ -98,8 +86,8 @@ uint32_t timeStampGPS = 0;
 uint32_t timeStampBridge = 0;
 
 
-void loop()
-{
+void loop(){
+  // get gps data
   if (millis() - timeStampGPS > updateNormalDelay) {
     Serial.println("--------------------------------------------");
     timeStampGPS = millis();
@@ -127,12 +115,13 @@ void loop()
   
     }else{
       Serial.println("ERROR GETTING GPS DATA");
+      updateBridgeDB("gpsstatus",String(gpsstatus));
     };
 
   }
 
   // update bridge db every 20 sec
-  if (millis() - timeStampBridge > 10000) {
+  if (millis() - timeStampBridge > 20000) {
     Serial.println("--------------------------------------------");
     timeStampBridge = millis();
 
@@ -144,6 +133,9 @@ void loop()
     // get localtime and send it to database
     String GSMlocaltime = modem.getGSMDateTime(DATE_FULL);
     updateBridgeDB("lastupdate",String(GSMlocaltime));  
+
+    // send gps status to database
+    updateBridgeDB("gpsstatus",String(gpsstatus)); 
 
 
   }
@@ -162,9 +154,9 @@ void updatebattery(){
 }
 
 bool getGPS(){
+  uint32_t getGPStimestart = millis();
   Serial.println("Requesting current GPS/GNSS/GLONASS location");
   for (;;) {
-      
       if (modem.getGPS(&fixMode, &lat2, &lon2, &speed2, &alt2, &vsat2, &usat2, &accuracy2,
                         &year2, &month2, &day2, &hour2, &min2, &sec2)) {
 
@@ -182,10 +174,16 @@ bool getGPS(){
           // Serial.print("\tMinute:"); Serial.print(min2);
           // Serial.print("\tSecond:"); Serial.println(sec2);
 
+          gpsstatus = "on";
           return true;
       } else {
           Serial.print(".");
           delay(1000);
+          if(millis() > getGPStimestart + getGPSTimeout ){
+            Serial.println("GPS TIMED OUT");
+            gpsstatus = "off";
+            return false;
+          }
       }
   }
   return false;
