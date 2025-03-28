@@ -9,13 +9,15 @@
   flex-direction: column;
 }
 
-#gpsstatus {
+.iconstatus {
   position: absolute;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  font-size: 0.9rem;
-  top: 0.1rem;
-  left: 0.1rem;
-  color: red;
+  top: 0.5rem;
+  left: 0.5rem;
+}
+
+.iconstatus img {
+  height: 1.5rem;
+  width: 1.5rem;
 }
 
 #lastupdate {
@@ -58,11 +60,33 @@
   margin: auto;
 }
 
+.batteryindicator {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  color: white;
+  font-size: 1.2rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  display: flex;
+  justify-content: left;
+  align-content: center;
+}
+
+.batteryindicator img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+#batteryvoltage {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .settingsbutton {
   position: absolute;
   width: 2rem;
   height: 2rem;
-  top: 0.5rem;
+  bottom: 1rem;
   right: 0.5rem;
 }
 

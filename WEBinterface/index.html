@@ -12,9 +12,15 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   </head>
   <body class="body">
-    <h1 id="gpsstatus">----</h1>
+    <div class="iconstatus">
+      <img id="network_icon" src="./network_off.png" />
+      <img id="gps_icon" src="./gps_off.png" />
+    </div>
+
     <img class="settingsbutton" onclick="settingsclick()" src="./capybara.png" />
+
     <h id="lastupdate">Last Update</h>
+
     <div id="map"></div>
     <div class="timeframeselector">
       <button onclick="setTimeFrameOffset(1)">1h</button>
@@ -22,6 +28,11 @@
       <button onclick="setTimeFrameOffset(6)">6h</button>
       <button onclick="setTimeFrameOffset(24)">24h</button>
       <button onclick="setTimeFrameOffset(72)">72h</button>
+    </div>
+
+    <div class="batteryindicator">
+      <img src="./battery.png" />
+      <label id="batteryvoltage">--V</label>
     </div>
 
     <div id="settingswrapper">
